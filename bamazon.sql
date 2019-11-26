@@ -16,6 +16,25 @@ CREATE TABLE products (
 	PRIMARY KEY (item_id)
 );
 
+-- create departments table --
+CREATE TABLE departments (
+	department_id INT AUTO_INCREMENT NOT NULL,
+	department_name VARCHAR(100) NULL,
+	over_head_costs DECIMAL(10,2) NULL,
+	PRIMARY KEY (department_id)
+);
+
+-- default table vals --
+INSERT INTO departments (department_name, over_head_costs)
+VALUES 	("Music", 2000), 
+		("Movies", 2000), 
+		("Electronics", 10000), 
+		("Toys", 2000), 
+		("Household essentials", 1000), 
+		("Apparel", 1000), 
+		("Hardware", 500),
+		("Sports Equipment", 1300);
+
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Salcedo1@1';
 
 -- default products vals -- 
@@ -34,3 +53,4 @@ VALUES ("Workingman's Dead by Grateful Dead - Vinyl", "Music", 19.99, 40),
        
 -- view tables --
 SELECT * FROM products;
+SELECT * FROM departments;

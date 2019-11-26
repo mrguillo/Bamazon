@@ -61,24 +61,26 @@ function viewItems() {
 		inquirer.prompt([
 			{
 				name: "id",
-				message: "Please enter the item_ID of the item that you would like to purchase.",
+				message: "Type the [ item_id ] of the product you would like to buy.",
 				// validates that the id is a number greater than 0 and less than/equal to 
 				// the number of items
 				validate: function(value) {
 					if (value > 0 && isNaN(value) === false && value <= results.length) {
 						return true;
 					}
+					console.log(" <--- Please enter a valid item_id");
 					return false;
 				}
 			},
 			{
 				name: "qty",
-				message: "What quantity would you like to purchase?",
+				message: "How many units of the product you would like to buy?",
 				// validate the quantity is a number larger than 0
 				validate: function(value) {
 					if (value > 0 && isNaN(value) === false) {
 						return true;
 					}
+					console.log(" <-- Please enter a number");
 					return false;
 				}
 			}
@@ -89,23 +91,23 @@ function viewItems() {
 			var itemName;
 			var productSales;
 			// set above vars equal to results where the user id matches db id
-			for (var j = 0; j < results.length; j++) {
-				if (parseInt(transaction.id) === results[j].item_id) {
-					itemQty = results[j].stock_quantity;
-					itemPrice = results[j].price;
-					itemName = results[j].product_name;
-					productSales = results[j].product_sales;
+			for (var i = 0; i < results.length; i++) {
+				if (parseInt(transaction.id) === results[i].item_id) {
+					itemQty = results[i].stock_quantity;
+					itemPrice = results[i].price;
+					itemName = results[i].product_name;
+					productSales = results[i].product_sales;
 				}
 			}
-			// if user tries to buy more qty than db has available, tell them no, run the
-			// welcome function again
+			// if user tries to buy more qty than db stcok, prompt user and run the
+			// welcome function again...
 			if (parseInt(transaction.qty) > itemQty) {
 				console.log("\nInsufficient inventory for your requested quantity. We have " 
 					+ itemQty + " in stock. Try again.\n");
 				welcome();
 			} 
-			// if user tries to buy equal/less qty than db has available, tell them yes,
-			// update the db to reduce qty by customer purchase amt, update product sales
+			// if user tries to buy equal/less qty than db has available, proceed with purchase,
+			// update the db to reduce qty by customer purchase amount, update product sales db
 			// with revenue from the sale
 			else if (parseInt(transaction.qty) <= itemQty) {
 				console.log("\nCongrats! You successfully purchased " + transaction.qty 
@@ -119,7 +121,6 @@ function viewItems() {
 
 
 // function to reduce stock qty (inventory)
-// reduce stock qty function
 function lowerQty(item, purchaseQty, stockQty, price) {
 	// query with an update, set stock equal to stockqty - purchase qty
 	// where the item_id equals the id the user entered
@@ -139,7 +140,7 @@ function lowerQty(item, purchaseQty, stockQty, price) {
 	});
 }
 
-// function sales revenue 
+// function to calculate sales revenues 
 function salesRevenue(item, purchaseQty, productSales, price) {
 	var customerCost = parseInt(purchaseQty) * price;
 	// query with an update, set product rev equal to current product sales + 
@@ -158,7 +159,7 @@ function salesRevenue(item, purchaseQty, productSales, price) {
 			if (error) throw error;
 			// log it fixed to 2 decimals to tell customer what their price was
 			console.log("The total price is [$" + customerCost.toFixed(2) 
-				+ "] Thanks for you purchase!\n");
+				+ "] Thanks for your purchase!\n");
 			// run welcome function
 			welcome();
 	});
