@@ -1,19 +1,26 @@
 // npm requirements
+// ==========================================================================
+
 var inquirer = require("inquirer");
 var mysql = require("mysql");
 var myPassword = require("./pw.js");
 
 
-// create mysql connection
+// set mysql connection
+// ==========================================================================
+
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "",
+    password: "Salcedo1@1",
     database: "bamazon_db"
 });
 
+
 // connect to db
+// ==========================================================================
+
 connection.connect(function (error) {
     if (error) throw error;
     // welcome customer
@@ -22,13 +29,15 @@ connection.connect(function (error) {
         "-----------------------------------------------------------------\n");
     // start the app
     console.log("the content is: " + myPassword)
-    welcome();
+    storeMenu();
 });
 
 
-// initial screen / app opens
-function welcome() {
-    // ask customer what they'd like to do
+// initial screen / app menu
+// ==========================================================================
+
+function storeMenu() {
+    // ask customer what to do
     inquirer.prompt([{
         name: "action",
         type: "list",
@@ -46,17 +55,18 @@ function welcome() {
     });
 }
 
+
 // function for building the items table for customers to view
+// ==========================================================================
 
 function viewItems() {
 	// save my sql query
 	var query = "SELECT * FROM products";
 	// query db display results
 	connection.query(query, function(error, results) {
-		// if error, tell us
 		if (error) throw error;
-		// call the console table function to build/display the items table
 		console.table(results);
+		console.log("\n\n-----------------------------------------------------------------\n");
 		// ask customer what they'd like to buy and how much qty
 		inquirer.prompt([
 			{
@@ -100,13 +110,13 @@ function viewItems() {
 				}
 			}
 			// if user tries to buy more qty than db stcok, prompt user and run the
-			// welcome function again...
+			// storeMenu FUNCTION again...
 			if (parseInt(transaction.qty) > itemQty) {
 				console.log("\nInsufficient inventory for your requested quantity. We have " 
 					+ itemQty + " in stock. Try again.\n");
-				welcome();
+				storeMenu();
 			} 
-			// if user tries to buy equal/less qty than db has available, proceed with purchase,
+			// if user tries to buy equal or less qty than db has available, proceed with purchase,
 			// update the db to reduce qty by customer purchase amount, update product sales db
 			// with revenue from the sale
 			else if (parseInt(transaction.qty) <= itemQty) {
@@ -120,7 +130,9 @@ function viewItems() {
 }
 
 
-// function to reduce stock qty (inventory)
+// FUNCTION to reduce stock qty (inventory)
+// ==========================================================================
+
 function lowerQty(item, purchaseQty, stockQty, price) {
 	// query with an update, set stock equal to stockqty - purchase qty
 	// where the item_id equals the id the user entered
@@ -140,7 +152,10 @@ function lowerQty(item, purchaseQty, stockQty, price) {
 	});
 }
 
-// function to calculate sales revenues 
+
+// FUNCTION to calculate sales revenues 
+// ==========================================================================
+
 function salesRevenue(item, purchaseQty, productSales, price) {
 	var customerCost = parseInt(purchaseQty) * price;
 	// query with an update, set product rev equal to current product sales + 
@@ -160,12 +175,15 @@ function salesRevenue(item, purchaseQty, productSales, price) {
 			// log it fixed to 2 decimals to tell customer what their price was
 			console.log("The total price is [$" + customerCost.toFixed(2) 
 				+ "] Thanks for your purchase!\n");
-			// run welcome function
-			welcome();
+			// run storeMenu FUNCTION
+			storeMenu();
 	});
 }
 
-// function to exit app
+
+// FUNCTION to exit app
+// ==========================================================================
+
 function exit() {
 	console.log("\nThanks for shopping at Bamazon's! Have a good day.");
 	connection.end();

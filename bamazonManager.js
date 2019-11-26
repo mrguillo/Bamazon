@@ -1,32 +1,40 @@
 // npm requirements
+// ==========================================================================
+
 var inquirer = require("inquirer");
 var mysql = require("mysql");
 var myPassword = require("./pw.js");
 
 
 // create mysql connection
+// ==========================================================================
+
 var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "Salcedo1@1",
+    password: "",
     database: "bamazon_db"
 });
 
+
 // connect to db
+// ==========================================================================
+
 connection.connect(function (error) {
     if (error) throw error;
-    // welcome customer
+    // welcome MANAGER
     console.log("\n\n\n-----------------------------------------------------------------\n" +
-        "Welcome to Bamazon MANAGER ! \n" +
+        "Welcome to Bamazon MANAGER! \n" +
         "-----------------------------------------------------------------\n");
     // start the app
     manager();
 });
 
 
-// List a set of menu options: asks managers what they want to do, runs a function 
+// Render menu options: asks managers what they want to do, runs a function 
 // based on selected answer
+// ==========================================================================
 
 function manager() {
     inquirer.prompt([
@@ -66,7 +74,9 @@ function manager() {
 
 }
 
+
 // FUNCTION * View Products for Sale
+// ==========================================================================
 
 function viewProducts() {
 	// save query to VAR query
@@ -87,27 +97,28 @@ function viewProducts() {
 
 
 // FUNCTION * View Low Inventory
+// ==========================================================================
     
 function viewLowInventory() {
-    // save query term
+    // save query 
 	var query = "SELECT * FROM products WHERE stock_quantity < 5";
 	// run query
 	connection.query(query, function(error, results) {
-		// let us know if error
 		if (error) throw error;
-		// build console table
+		// render console table
         console.log("\n-----------------------------------------------------------------\n");
         console.log("\n Showing products with low inventory ( <5 ) \n");
         console.table( results );
         console.log("\n\n-----------------------------------------------------------------\n");
-		// run welcome function
+		// run manager function
 		manager();
 	});
 }
 
-// FUNCTION * Add to Inventory
 
-// function to add to inventory
+// FUNCTION * Add to Inventory
+// ==========================================================================
+
 function addToInventory() {
 	// query db for all products
 	connection.query("SELECT * FROM products", function (error, results) {
@@ -158,6 +169,8 @@ function addToInventory() {
 }
 
 // increase inventory FUNCTION
+// ==========================================================================
+
 function increaseQty(item, stockQty, addQty) {
 	// query with an update, set stock equal to stockqty + addition qty
 	// where the item_id equals the id the user entered
@@ -172,7 +185,6 @@ function increaseQty(item, stockQty, addQty) {
 			}
 		], 
 		function(error, results) {
-			// throw error, else log inventory updated and return to welcome screen
 			if (error) throw error;
 			console.log("\nInventory successfully increased.\n");
 			manager();
@@ -181,8 +193,8 @@ function increaseQty(item, stockQty, addQty) {
 
 
 // FUNCTION * Add New Product
+// ==========================================================================
 
-// function to add new product
 function addNewProduct() {
 	// querying prior to inquirer so that I can build the choices array from all 
 	// available departments
@@ -238,7 +250,10 @@ function addNewProduct() {
 	});
 }
 
-// add item to db function
+
+// add item to db FUNCTION
+// ==========================================================================
+
 function addItemToDb(item, department, price, quantity) {
 	// query for creating table row, set vals for each column equal to parameters
 	connection.query(
@@ -257,7 +272,10 @@ function addItemToDb(item, department, price, quantity) {
 	});
 }
 
+
 // FUNCTION to exit app
+// ==========================================================================
+
 function exit() {
 	console.log("\nExiting Bamazon MANAGER! Have a good day.");
 	connection.end();

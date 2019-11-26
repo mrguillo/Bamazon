@@ -40,16 +40,16 @@ ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Salcedo1
 -- default products vals -- 
 -- populating base product sales data assuming past sales have occurred so that profitability won't be all deeply negative -- 
 INSERT INTO products (product_name, department_name, price, stock_quantity)
-VALUES ("Workingman's Dead by Grateful Dead - Vinyl", "Music", 19.99, 40), 
-		("The Departed", "Movies", 19.99, 35), 
-		("Lenovo Yoga 720 Laptop", "Electronics", 949.99, 4), 
-        ("Super Slinky XL", "Toys", 9.99, 100), 
-		("Pillows", "Household essentials", 14.99, 75), 
-        ("North Face Jacket", "Clothes", 89.99, 50), 
-       ("Set of Allen Wrenches", "Hardware", 29.99, 300), 
-       ("Hockey Net", "Sports Equipment", 49.99, 3), 
-       ("Xbox One", "Electronics", 299.99, 25), 
-       ("Stop Making Sense by Talking Heads - Vinyl", "Music", 19.99, 17);
+VALUES 	("thank u, next by Ariana Grande - Album", "Music", 19.99, 40), 
+		("Leading Digital: Turning Technology into Business", "Books", 29.99, 35), 
+		("Apple MacBook Air (13-inch)", "Electronics", 949.99, 4), 
+        ("Hasbro Connect 4 Game", "Toys", 9.99, 100), 
+		("Bounty Quick-Size Paper Towels", "Household essentials", 14.99, 75), 
+        ("North Face Jacket", "Apparel", 89.99, 50), 
+		("TEKTON Hex Key Wrench Set, 30-Piece", "Hardware", 29.99, 300), 
+		("Franklin Sports Blackhawk Portable Soccer Goal ", "Sports Equipment", 49.99, 3), 
+		("Xbox One S Two Controller Bundle (1TB)", "Electronics", 269.99, 25), 
+       ("Philips Sonicare C3 Premium Toothbrush Head", "Personal Care", 29.99, 17);
        
 -- view tables --
 SELECT * FROM products;
