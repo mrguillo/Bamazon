@@ -6,6 +6,9 @@ An Amazon-like storefront with the MySQL mock storefront. The app take in orders
 A CLI node.js app for Customers to view items and place orders, for Managers to perform inventory control and add new products, and for Supervisors to track department profitability and add new departments. 
  
 ## Video
+bamazon Customer demo [clic here](https://drive.google.com/file/d/1or1ctjXC247Dw4gK38XNNR3_FqXo_V-3/view)
+bamazon Manager demo [clic here](https://drive.google.com/file/d/1hta45282NRxHywDhcUzwxGNGXjdylMMk/view)	
+bamazon Supervisor [clic here](https://drive.google.com/file/d/1hta45282NRxHywDhcUzwxGNGXjdylMMk/view)
 
 
 ## Tech/framework used
@@ -14,17 +17,17 @@ A CLI node.js app for Customers to view items and place orders, for Managers to 
 - Javascript
 - [MySQL](https://www.mysql.com/)
 - [inquirer](https://www.npmjs.com/package/inquirer)
+- dotenv
 
 
-## Features
+## Main Features
 _Inquirer_.js strives to be an easily embeddable and beautiful command line interface for _Node_.js
-- Customers may purchase products from the available products in the MySQL database. 
-- Managers can reorder  inventory and new products to the databse. 
-- Supervisors have the ability to view profit data by department and add new departments. 
-- Console table organizes product, inventory, and department data in a concise manner within the CLI. 
-- User input validation is present to ensure that customers cannot purchase more inventory than Bamazon has in stock, managers don't add products with no inventory, and supervisors cannot add departments that already exist.
+- bamazon Customers - Users can purchase products from an available products table in the MySQL database. 
+- bamazon Managers - Users can reorder inventory and create new products to the databse. 
+-  bamazon Supervisors - Users can view profit data by department and add new departments. 
 
-## Installation
+
+## Setup
 - Install [Node js](https://nodejs.org/en/)
 - Clone the Bamazon repository to your machine
 - Open CLI, navigate to the cloned repository, and run the following to install the npm package dependencies 
@@ -34,12 +37,5 @@ _Inquirer_.js strives to be an easily embeddable and beautiful command line inte
 - Open MySQL Workbench, SQL Pro, or your preferred database management app. Open the "bamazon.sql" script from the cloned repo, and run it to set up the database and base product/department data.
 - Next, within the cloned repo, you'll need to create a pw.js file with the following code, and add your password to access your root server to that file. This file is a dependency for the app. If you do not require a password to access your root, simply leave the pw property as an empty string.
 
-
-```javascript
-var pwd = {
-	pw: "YOUR PASSWORD HERE"
-}
-	
-module.exports = pwd;
 
 > Written with [StackEdit](https://stackedit.io/).

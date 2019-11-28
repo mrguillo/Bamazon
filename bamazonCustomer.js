@@ -60,7 +60,7 @@ function storeMenu() {
 // ==========================================================================
 
 function viewItems() {
-	// save my sql query
+	// save my sql query to VAR
 	var query = "SELECT * FROM products";
 	// query db display results
 	connection.query(query, function(error, results) {

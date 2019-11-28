@@ -3,7 +3,7 @@
 
 var inquirer = require("inquirer");
 var mysql = require("mysql");
-var myPassword = require("./pw.js");
+var pw = require("./pw");
 
 
 // create mysql connection
@@ -13,7 +13,7 @@ var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password: "",
+    password: pw.pw,
     database: "bamazon_db"
 });
 
@@ -28,7 +28,8 @@ connection.connect(function (error) {
         "Welcome to Bamazon MANAGER! \n" +
         "-----------------------------------------------------------------\n");
     // start the app
-    manager();
+	console.log(myPassword);
+	manager();
 });
 
 
